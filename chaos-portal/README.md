@@ -3,9 +3,9 @@
 ### 1. Clone repository
 
 ```bash
-git pull
 git clone https://github.com/tomonori-ryo/chaos-portal.git
 cd .\chaos-portal\
+git pull
 
 composer install
 cp .env.example .env
