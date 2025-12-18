@@ -13,8 +13,9 @@ php artisan key:generate
 php artisan serve
 
 http://127.0.0.1:8000
-```
 
+```
+### 1.1 Create branch from main and name it your name
 
 ### 2. Project structure 
 
