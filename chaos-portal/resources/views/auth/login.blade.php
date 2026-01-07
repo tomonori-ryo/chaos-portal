@@ -149,7 +149,7 @@
             
             <div class="mb-6">
                 <label class="block text-gray-400 mb-2">Email</label>
-                <input type="email" name="email" class="w-full p-3 bg-gray-900 border border-gray-600 rounded text-white focus:outline-none focus:border-red-500" placeholder="user@example.com" required>
+                <input type="text" name="email" class="w-full p-3 bg-gray-900 border border-gray-600 rounded text-white focus:outline-none focus:border-red-500" placeholder="user@example.com" required>
             </div>
 
             <div class="mb-8">
