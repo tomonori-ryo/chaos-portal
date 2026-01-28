@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
     // 2.2 ロード画面 (The Purgatory)
     // ログイン成功後はまずここにリダイレクトされる仕様にする
     Route::get('/purgatory', [PurgatoryController::class, 'index'])->name('purgatory');
+    
+    // loading画面
+    Route::get('/loading', [PurgatoryController::class, 'loading'])->name('loading');
 
     // 2.4 メイン画面 (Russian Roulette Portal)
     // 煉獄の労働（連打）を終えた者だけが辿り着ける
