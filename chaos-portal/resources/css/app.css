@@ -9,3 +9,8 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Fly swatter cursor (Tailwind JIT で消えるのを回避) */
+.fly-swat {
+  cursor: url("/images/cursors/fly-swatter.png") 16 16, pointer;
+}
