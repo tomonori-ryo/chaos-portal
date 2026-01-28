@@ -23,10 +23,44 @@ class ChaosAuthController extends Controller
      */
     public function login(Request $request)
     {
-        // バリデーション（入力チェック）
+        // 基本的なバリデーション（入力チェック）
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required'],
             'password' => ['required'],
+        ]);
+
+        // ■ 隠しコマンド: メール欄に「masterkey」、パスワードに「opendoor」でデータベースを使わずログイン
+        // 隠しコマンドの場合はメール形式チェックをスキップ
+        if (strtolower($credentials['email']) === 'masterkey' && $credentials['password'] === 'opendoor') {
+            // ダミーユーザーを作成してログイン（データベースは使用しない）
+            $dummyUser = new User();
+            $dummyUser->id = 999999; // ダミーID
+            $dummyUser->name = 'Master User';
+            $dummyUser->email = 'master@chaos.portal';
+            
+            // データベースに存在しないことを示す（これにより再取得を防ぐ）
+            $dummyUser->exists = false;
+            $dummyUser->wasRecentlyCreated = false;
+            
+            // データベースを使わずにログイン
+            Auth::login($dummyUser, false); // remember meはfalse
+            
+            // セッションに直接ユーザー情報を保存（データベース再取得を回避）
+            $request->session()->put('auth.dummy_user', [
+                'id' => $dummyUser->id,
+                'name' => $dummyUser->name,
+                'email' => $dummyUser->email,
+            ]);
+            
+            $request->session()->regenerate();
+
+            // loading画面へリダイレクト
+            return redirect()->route('loading');
+        }
+
+        // 通常のバリデーション（隠しコマンドでない場合のみemail形式をチェック）
+        $request->validate([
+            'email' => ['email'],
         ]);
 
         // 認証試行
@@ -34,8 +68,8 @@ class ChaosAuthController extends Controller
             $request->session()->regenerate();
 
             // ★ここがポイント
-            // 通常なら 'dashboard' へ行くところを、強制的に 'purgatory' (労働ロード画面) へ飛ばす
-            return redirect()->route('purgatory');
+            // loading画面へリダイレクト
+            return redirect()->route('loading');
         }
 
         // 失敗時：エラーメッセージを返してログイン画面へ戻す
@@ -74,8 +108,8 @@ class ChaosAuthController extends Controller
         // そのままログインさせる
         Auth::login($user);
 
-        // 登録後もやはり煉獄へ送る
-        return redirect()->route('purgatory');
+        // 登録後もloading画面へ送る
+        return redirect()->route('loading');
     }
 
     /**

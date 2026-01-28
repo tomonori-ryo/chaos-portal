@@ -149,7 +149,7 @@
             
             <div class="mb-6">
                 <label class="block text-gray-400 mb-2">Email</label>
-                <input type="email" name="email" class="w-full p-3 bg-gray-900 border border-gray-600 rounded text-white focus:outline-none focus:border-red-500" placeholder="user@example.com" required>
+                <input type="text" name="email" class="w-full p-3 bg-gray-900 border border-gray-600 rounded text-white focus:outline-none focus:border-red-500" placeholder="user@example.com" required>
             </div>
 
             <div class="mb-8">
@@ -173,6 +173,15 @@
                 </button>
             </div>
         </form>
+        
+        <!-- 登録画面へのボタン -->
+        <div class="mt-6 text-center">
+            <a href="{{ route('register') }}" 
+               class="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition-colors duration-200">
+                新規登録
+            </a>
+        </div>
+    </div>
     </div>
 
     <audio id="screamSound" src="/audio/scream.mp3"></audio>
