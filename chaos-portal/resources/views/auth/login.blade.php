@@ -173,6 +173,15 @@
                 </button>
             </div>
         </form>
+        
+        <!-- 登録画面へのボタン -->
+        <div class="mt-6 text-center">
+            <a href="{{ route('register') }}" 
+               class="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition-colors duration-200">
+                新規登録
+            </a>
+        </div>
+    </div>
     </div>
 
     <audio id="screamSound" src="/audio/scream.mp3"></audio>
