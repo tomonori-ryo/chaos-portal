@@ -92,17 +92,17 @@ class ChaosAuthController extends Controller
     public function register(Request $request)
     {
         // 入力チェック
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'], // ここで「素数のみ」などの独自ルールを追加することも可能
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8','confirmed'], // ここで「素数のみ」などの独自ルールを追加することも可能
         ]);
 
         // ユーザー作成
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         // そのままログインさせる

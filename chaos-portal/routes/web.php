@@ -34,7 +34,7 @@ Route::middleware('guest')->group(function () {
 
     // 2.3 新規登録画面 (Epilepsy & Violence)
     Route::get('/register', [ChaosAuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [ChaosAuthController::class, 'register']);
+    Route::post('/register', [ChaosAuthController::class, 'register'])->name('register.post');
 });
 
 // ----------------------------------------------------------------

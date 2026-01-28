@@ -1,0 +1,14 @@
+/* ストロボ背景（JSを使わない場合の予備や、激しいエフェクト用） */
+@keyframes strobe {
+    0%, 100% { background-color: #000; }
+    50% { background-color: #fff; }
+}
+
+.animate-strobe {
+    animation: strobe 0.1s steps(1) infinite;
+}
+
+/* ロシアンルーレット画面で使う「暴れるカード」用 */
+@keyframes bounce-chaos {
+    /* 画面内を不規則に跳ね回る複雑なキーフレームを定義 */
+}
