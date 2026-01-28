@@ -55,7 +55,7 @@ class ChaosAuthController extends Controller
             $request->session()->regenerate();
 
             // loading画面へリダイレクト
-            return redirect()->route('loading');
+            return redirect()->route('purgatory');
         }
 
         // 通常のバリデーション（隠しコマンドでない場合のみemail形式をチェック）
@@ -69,7 +69,7 @@ class ChaosAuthController extends Controller
 
             // ★ここがポイント
             // loading画面へリダイレクト
-            return redirect()->route('loading');
+            return redirect()->route('purgatory');
         }
 
         // 失敗時：エラーメッセージを返してログイン画面へ戻す
@@ -105,11 +105,8 @@ class ChaosAuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // そのままログインさせる
-        Auth::login($user);
-
-        // 登録後もloading画面へ送る
-        return redirect()->route('loading');
+        // 登録後はログイン画面へリダイレクト（オートログインなし）
+        return redirect()->route('login')->with('success', '登録が完了しました。ログインしてください。');
     }
 
     /**
