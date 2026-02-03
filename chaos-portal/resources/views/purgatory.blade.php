@@ -39,7 +39,7 @@
   </main>
 
   <script>
-    window.__PURGATORY_REDIRECT_TO__ = "{{ url('/') }}"; // <- сюда перейти при 100%
+    window.__PURGATORY_REDIRECT_TO__ = "{{ route('dashboard') }}"; // 100%到達でルーレット画面へ
   </script>
 </body>
 </html>

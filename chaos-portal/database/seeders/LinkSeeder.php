@@ -12,10 +12,15 @@ class LinkSeeder extends Seeder
      */
     public function run(): void
     {
+        // 既存データが残ると確率が崩れるので、毎回入れ替える
+        DB::table('links')->truncate();
+
         $links = [];
         
         // 1. アタリのサイト
         $safeSites = [
+            // 6割の確率でここに飛ぶ（要件）
+            ['title' => 'Luqman Hadi', 'url' => 'https://www.luqmanhadi.com/'],
             ['title' => 'Google', 'url' => 'https://google.com'],
             ['title' => 'Yahoo!', 'url' => 'https://yahoo.co.jp'],
             ['title' => 'X (Twitter)', 'url' => 'https://twitter.com'],
@@ -26,8 +31,13 @@ class LinkSeeder extends Seeder
 
         // 2. 50個になるまで埋める
         for ($i = 0; $i < 50; $i++) {
-            // 30%の確率で「トラップ（未実装）」
-            if (rand(1, 100) <= 30) {
+            // 配分:
+            // - 30%: トラップ（強制ログアウト）
+            // - 60%: https://www.luqmanhadi.com/
+            // - 10%: その他の安全サイト
+            $roll = rand(1, 100);
+
+            if ($roll <= 30) {
                 $links[] = [
                     'title' => '未実装機能 ' . ($i + 1),
                     'url' => null,
@@ -35,8 +45,18 @@ class LinkSeeder extends Seeder
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
+            } elseif ($roll <= 90) {
+                $site = $safeSites[0]; // Luqman Hadi
+                $links[] = [
+                    'title' => $site['title'] . ' (Ver.' . $i . ')',
+                    'url' => $site['url'],
+                    'is_trap' => false,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             } else {
-                $site = $safeSites[array_rand($safeSites)];
+                // index 1..n から選ぶ（Luqman以外）
+                $site = $safeSites[rand(1, count($safeSites) - 1)];
                 $links[] = [
                     'title' => $site['title'] . ' (Ver.' . $i . ')',
                     'url' => $site['url'],
